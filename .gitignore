@@ -1,0 +1,4 @@
+backend/node_modules/
+frontend/node_modules/
+# frontend/assets/images/ pour ne pas importer dans github les images
+frontend/assets/images/
