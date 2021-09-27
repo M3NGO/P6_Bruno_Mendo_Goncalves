@@ -1,4 +1,6 @@
+# frontend ou backend /assets/images/ pour ne pas importer dans github les images
 backend/node_modules/
+backend/images/
+
 frontend/node_modules/
-# frontend/assets/images/ pour ne pas importer dans github les images
 frontend/assets/images/
