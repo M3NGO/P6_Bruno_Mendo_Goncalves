@@ -1,10 +1,10 @@
-const jwt = require('jsonwebtoken');
+let jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {
     try {
-        const token = req.headers.authorization.split(' ')[1];
-        const decodedToken = jwt.verify(token, 'Opazlf11"é&&0_"??.zrfiofzhgo@PMld,fr');
-        const userId = decodedToken.userId;
+        let token = req.headers.authorization.split(' ')[1];
+        let decodedToken = jwt.verify(token, 'Opazlf11"é&&0_"??.zrfiofzhgo@PMld,fr');
+        let userId = decodedToken.userId;
 
         if(req.body.uderId && req.body.userId !== userId) {
             throw 'User ID non valable !';

@@ -1,17 +1,18 @@
 //controllers pour stocker toute la logique métier
-const Sauce = require('../models/Sauce');
-const fs = require('fs'); //Systeme Filesystem de node.JS
+let Sauce = require('../models/Sauce');
+let fs = require('fs'); //Systeme Filesystem de node.JS
+let { findOne } = require('../models/Sauce');
 
 
 exports.createSauce = (req, res, next) =>{
-  const sauceObject = JSON.parse(req.body.sauce)
+  let sauceLikes = JSON.parse(req.body.sauce)
    
-    delete sauceObject._id; // pour retirer le champs _id car c'est MongoDb qui créé cet _id
-    const sauce = new Sauce({
-      ...sauceObject,
+    delete sauceLikes._id; // pour retirer le champs _id car c'est MongoDb qui créé cet _id
+    let sauce = new Sauce({
+      ...sauceLikes,
       imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` //génération adresse dynamique de l'image
     });
-    console.log(sauceObject)
+    console.log(sauceLikes)
     sauce.save() // sauvegarde sauce créé juste au dessus dans la BDD
       .then(() => res.status(201).json({message: 'Objet enregistré dans MongoDB'})) // renvoit un message de création au front sinon ça boucle
       .catch(error=> res.status(400).json({error})); // si c'est pas enregistré alors on a message erreur
@@ -19,14 +20,14 @@ exports.createSauce = (req, res, next) =>{
 };
 
 exports.modifSauce = (req, res, next) => {
-  const sauceObject = req.file ?
+  let sauceLikes = req.file ?
   {
     ...JSON.parse(req.body.sauce),
     imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     
   } : { ...req.body};
 
-  Sauce.updateOne({_id: req.params.id}, {...sauceObject, _id: req.params.id })
+  Sauce.updateOne({_id: req.params.id}, {...sauceLikes, _id: req.params.id })
   .then(() => res.status(200).json({message: 'Sauce modifiée'}))
   .catch(error => res.status(400).json({error}));
 };
@@ -34,7 +35,7 @@ exports.modifSauce = (req, res, next) => {
 exports.deleteSauce = (req, res, next) => {
   Sauce.findOne({_id : req.params.id})
     .then(sauce => {
-      const filename = sauce.imageUrl.split('/images/')[1];
+      let filename = sauce.imageUrl.split('/images/')[1];
       fs.unlink(`images/${filename}`, () => {//unlink pour effacer une chaine de caractères 
         Sauce.deleteOne({ _id: req.params.id })
         .then(() => res.status(200).json({ message: 'Sauce supprimée !'}))
@@ -59,3 +60,39 @@ exports.getAllSauces = (req, res, next) =>{ // /api/sauce sera l'url de notre ap
       .then(sauces => res.status(200).json(sauces))
       .catch(error => res.status(400).json({ error }));
   };
+
+
+
+exports.createLikesDislikes =(req, res, next)=>{
+  let sauceLikes = req.body.like
+  let userId = req.body.userId
+  let idSauce = req.params.id
+
+  if(sauceLikes === 1){
+    Sauce.updateOne({_id: idSauce}, {$inc : {likes: sauceLikes, dislikes:0}, $addToSet: {usersLiked: userId},} , {multi: true})
+      .then(() => res.status(200).json({message: 'Hmmm je Like!'}))
+      .catch(error => res.status(400).json({error}));
+    }
+
+  else if(sauceLikes === -1){
+    Sauce.updateOne({_id: idSauce}, {$inc: {dislikes: -sauceLikes, likes:0}, $addToSet: {usersDisliked:userId} } , {multi: true} )//-saucelikes pour inverser le sens du 1 renvoyé par la requete client
+      .then(() => res.status(200).json({message: 'Beurk je Dislike!'}))
+      .catch(error => res.status(400).json({error}));
+  }
+
+  else {
+    Sauce.findOne({_id: idSauce})
+      .then((document)=>{
+        if(document.usersLiked.includes(userId)) {//usersLikes.includes(userId) pour cibler si le user a liké alors on enlèvera son userid et un vote en moins
+          Sauce.updateOne({_id: idSauce,}, {$pull : {usersLiked :userId, }, $inc: {likes:-1,},} , {multi: true})
+          .then(() => res.status(200).json({message: 'Je ne Like plus!'}))
+          .catch(error => res.status(400).json({error}));
+        } //FIN if O userLike ID => delete user and vote
+        else{
+          Sauce.updateOne({_id: idSauce,}, {$pull : {usersDisliked :userId, }, $inc: {dislikes:-1,},} , {multi: true})
+          .then(() => res.status(200).json({message: 'Je ne Dislike plus!'}))
+          .catch(error => res.status(400).json({error}));
+        }//FIN if O ELSE = userDislike ID => delete user and vote
+      })//FIN then if O includes userId
+    } // FIN ELSE findone(id sauce) if O includes userId
+}//FIN exports.createLikesDislikes

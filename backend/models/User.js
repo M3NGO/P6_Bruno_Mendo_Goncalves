@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
-const uniqueValidator = require('mongoose-unique-validator');
+let mongoose = require('mongoose');
+let uniqueValidator = require('mongoose-unique-validator');
 
-const userSchema = mongoose.Schema({
+let userSchema = mongoose.Schema({
     email : {type : String, required:true, unique:true}, // unique:true  + validateur mongoose pour empecher des users de créer deux profils avec une meme boite mail
     password : {type : String, required:true},
 

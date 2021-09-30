@@ -1,11 +1,11 @@
 // creation du serveur backend
 // LE NECESSAIRE POUR DEVELOPPER UN SERVEUR BACK-END SECURE (on peut développer un peu plus le SWITCH)
-const http = require('http');
-const app = require('./app');
+let http = require('http');
+let app = require('./app');
                     
 // NormalizePort revoie un port valide qu'il soit fourni sous forme d'un numéro ou d'une chaîne
-const normalizePort = val => {
-    const port = parseInt(val, 10);
+let normalizePort = val => {
+    let port = parseInt(val, 10);
                             
         if (isNaN(port)) {
             return val;
@@ -16,16 +16,16 @@ const normalizePort = val => {
             return false;
 };
                     
-const port = normalizePort(process.env.PORT || '3000');// ici on change le port où le backend est présent (on peut changer 3000 par nimporte quoi)
+let port = normalizePort(process.env.PORT || '3000');// ici on change le port où le backend est présent (on peut changer 3000 par nimporte quoi)
                         
 app.set('port', port);
 // fonction errorHandler recherche les différentes erreurs et les gère de maniere appropriée
-const errorHandler = error => {
+let errorHandler = error => {
     if (error.syscall !== 'listen') {
         throw error;
     }
-    const address = server.address();
-    const bind = typeof address === 'string' ? 'pipe ' + address : 'port: ' + port;
+    let address = server.address();
+    let bind = typeof address === 'string' ? 'pipe ' + address : 'port: ' + port;
                         
     switch (error.code) {
                         
@@ -39,17 +39,17 @@ const errorHandler = error => {
         break;
         default:
         throw error;
-    }// FIN - const bind switch error
+    }// FIN - let bind switch error
                     
-};// FIN - const errorHandler = error
+};// FIN - let errorHandler = error
                     
-const server = http.createServer(app);
+let server = http.createServer(app);
                     
 //serveur ON
 server.on('error', errorHandler); // si serveur ON mais errorHandler se déclanche alors on aura la fonction de errorHandler qui s'effectue
 server.on('listening', () => { // serveur ON, si tout se passe bien on a un console log avec le port d'écoute serveur affiché
-    const address = server.address();
-    const bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + port;
+    let address = server.address();
+    let bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + port;
     console.log('Listening on fucking ' + bind);
 });// FIN - error Handler listening
                     

@@ -36,6 +36,7 @@ app.use((req, res, next) => {
   //donne le début de la route à suivre pur URL par STUFF.JS car on les a enlevées de STUFF.JS
   app.use('/images', express.static(path.join(__dirname,'images')));
   app.use('/api/sauces', saucesRoutes);
+  app.use('/api/sauces/:id/like', saucesRoutes)
   app.use('/api/auth', userRoutes);
   
   module.exports = app;

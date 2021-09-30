@@ -1,11 +1,11 @@
-const bcrypt = require('bcrypt')// ne pas oublier d'installer bcrypt pour le hash mdp : npm install --save bcrypt
-const jwt = require('jsonwebtoken')
-const User = require('../models/User');
+let bcrypt = require('bcrypt')// ne pas oublier d'installer bcrypt pour le hash mdp : npm install --save bcrypt
+let jwt = require('jsonwebtoken')
+let User = require('../models/User');
 
 exports.signup = (req, res, next) => {
 bcrypt.hash(req.body.password, 14 ) // methode asynchrone donc => then et catch // bcrypt.hash pour hasher mdp / le 14 c'est pour indiquer le nombre de fois qu'on fait tourner l'algorithm de hash minimum 10 plus c'est mieux mais plus lent
 .then(hash =>{
-    const user = new User({
+    let user = new User({
         email: req.body.email,
         password: hash // on utilise hash pour stocker le hash du mot de passe et non le mdp en clair
     });

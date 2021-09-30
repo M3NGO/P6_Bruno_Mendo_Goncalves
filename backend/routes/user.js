@@ -1,7 +1,7 @@
-const express = require('express');
-const router = express.Router();
+let express = require('express');
+let router = express.Router();
 
-const userCtrl = require('../controllers/user');
+let userCtrl = require('../controllers/user');
 
 router.post('/signup', userCtrl.signup);
 
