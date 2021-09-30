@@ -2,8 +2,6 @@
 let Sauce = require('../models/Sauce');
 let fs = require('fs'); //Systeme Filesystem de node.JS
 
-
-
 exports.createSauce = (req, res, next) =>{
   let sauceLikes = JSON.parse(req.body.sauce)
    

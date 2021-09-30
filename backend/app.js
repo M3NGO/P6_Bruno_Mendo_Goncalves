@@ -1,19 +1,19 @@
-const express = require('express'); //librairie de Javascript
-const bodyParser = require('body-parser') // import de body-parser après l'avoir installé dans package.json on s'en sert ensuite dans app.post
+let express = require('express'); //librairie de Javascript
+let bodyParser = require('body-parser') // import de body-parser après l'avoir installé dans package.json on s'en sert ensuite dans app.post
 // bodyparser sert rendre le body de la requete exploitable par l'app
 
 // importer mongoose au projet pour faciliter les interactions avec mongoDB grâce a ses fonctions:
 
-const mongoose = require('mongoose'); //mongoose pour gérer la base de donnée MongoDB
+let mongoose = require('mongoose'); //mongoose pour gérer la base de donnée MongoDB
 
-const path = require('path');
+let path = require('path');
 //importer le routeur du dossier router backend:
-const saucesRoutes = require('./routes/sauces')
-const userRoutes = require('./routes/user')
+let saucesRoutes = require('./routes/sauces')
+let userRoutes = require('./routes/user')
 
-// A voir const mongoMask = require('mongo-mask') a implementer pour securiser l'application
+// A voir let mongoMask = require('mongo-mask') a implementer pour securiser l'application
 
-const app = express();
+let app = express();
 
 // connexion a mongoDB et mon cluster :
 mongoose.connect('mongodb+srv://M3NGO:YiBkn5hFq9pRv1Y0@clusterpiiquante.nogoc.mongodb.net/BDD_PIIQUANTE?retryWrites=true&w=majority',
