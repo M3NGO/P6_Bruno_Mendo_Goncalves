@@ -1,7 +1,7 @@
 //controllers pour stocker toute la logique métier
 let Sauce = require('../models/Sauce');
 let fs = require('fs'); //Systeme Filesystem de node.JS
-let { findOne } = require('../models/Sauce');
+
 
 
 exports.createSauce = (req, res, next) =>{
