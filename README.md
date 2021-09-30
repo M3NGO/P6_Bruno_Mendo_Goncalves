@@ -1,10 +1,10 @@
 # P6_Bruno_Mendo_Goncalves
 
-1) initialize project :
+- initialize project :
 cd backend
 npm init (entry point server.js)
 
-1) install dependancies:
+- install dependancies:
 into backend folder install:
 
     - express: npm install --save express
@@ -15,3 +15,11 @@ into backend folder install:
     - jsonWebToken : npm install --save jsonwebtoken
     - multer : npm install --save multer
     - file-system : npm install --save file-system
+
+- launch frontend: 
+    cd frontend
+    npm start
+
+- launch backend:
+    cd backend
+    nodemon server
