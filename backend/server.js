@@ -50,7 +50,7 @@ server.on('error', errorHandler); // si serveur ON mais errorHandler se déclanc
 server.on('listening', () => { // serveur ON, si tout se passe bien on a un console log avec le port d'écoute serveur affiché
     let address = server.address();
     let bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + port;
-    console.log('Listening on fucking ' + bind);
+    console.log('Listening on ' + bind);
 });// FIN - error Handler listening
                     
 server.listen(port); // serveur écoute le port définit su serveur

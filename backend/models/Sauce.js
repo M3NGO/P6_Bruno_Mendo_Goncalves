@@ -8,10 +8,10 @@ let saucesSchema = mongoose.Schema({ // saucesShema va donne la forme de l'objet
     mainPepper: {type : String, required:true},
     imageUrl :{type : String, required:true},
     heat : {type : Number, required:true},
-    usersLiked :{type :Array, required:true}, //a revoir
-    usersDisliked : {type :Array, required:true},//a revoir
-    likes :{type :Number, default : 0,min: 0, required:true}, // default :0 to set value by default 0 
-    dislikes :{type :Number, default : 0,min: 0, required:true},
+    usersLiked :{type :Array, required:true}, //usersId like
+    usersDisliked : {type :Array, required:true},//usersId dislike
+    likes :{type :Number, default : 0, required:true}, // default :0 to set value by default 0 
+    dislikes :{type :Number, default : 0, required:true},
 
 });
 

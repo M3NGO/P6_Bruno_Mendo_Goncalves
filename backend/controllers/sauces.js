@@ -18,16 +18,24 @@ exports.createSauce = (req, res, next) =>{
 };
 
 exports.modifSauce = (req, res, next) => {
-  let sauceLikes = req.file ?
+
+  Sauce.findOne({_id : req.params.id}) //find et delete ancienne image
+  .then(sauce => {
+    let filename = sauce.imageUrl.split('/images/')[1];
+    fs.unlinkSync(`images/${filename}`)
+    })
+  
+  let sauceLikes = req.file ? //ajout nouvelle image 
   {
     ...JSON.parse(req.body.sauce),
     imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     
   } : { ...req.body};
-
-  Sauce.updateOne({_id: req.params.id}, {...sauceLikes, _id: req.params.id })
+  Sauce.updateOne({_id: req.params.id}, {$set: {...sauceLikes, _id: req.params.id }})
   .then(() => res.status(200).json({message: 'Sauce modifiée'}))
   .catch(error => res.status(400).json({error}));
+
+  
 };
 
 exports.deleteSauce = (req, res, next) => {
@@ -46,7 +54,7 @@ exports.deleteSauce = (req, res, next) => {
 
 exports.getOneSauce = (req, res, next) =>{
   // récupération d'une sauce Specicifique
-    Sauce.findOne({ _id: req.params.id })
+    Sauce.findOne({ _id: req.params.id})
       .then(sauce => res.status(200).json(sauce))
       .catch(error => res.status(404).json({ error }));
   //Fin - récupération d'une sauce spécifique
