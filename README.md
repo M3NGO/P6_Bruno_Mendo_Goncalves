@@ -1,5 +1,9 @@
 # P6_Bruno_Mendo_Goncalves
 
+- Install NPM
+cd backend
+npm install
+
 - initialize project :
 cd backend
 npm init (entry point server.js)
