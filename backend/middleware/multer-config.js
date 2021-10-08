@@ -1,7 +1,7 @@
 // ne pas oublier de npm install --save multer
 let multer = require('multer');
 
-let MIME_TYPE = { // mimetype donne la définition des formats acceptés pouir les fichiers téléchargés
+let MIME_TYPE = { // mimetype donne la définition des formats acceptés pour les fichiers téléchargés
     'image/jpeg': 'jpg',
     'image/png': 'png',
     'image/jpg': 'jpg',
